@@ -138,21 +138,7 @@ class Carrito {
 const cardContainer = document.querySelector("#card-container");
 
 const renderProductos = (productos) => {
-  productos.forEach((producto) => {
-    const productoCard = document.createElement("div");
-    productoCard.className = "card";
-    productoCard.innerHTML = `
-     <div class="card-header">
-        <h2>${producto.nombre}</h2>
-        <p>Precio: $${producto.precio}</p>
-    </div>
-    <div class="card-actions">
-        <button data-id=${producto.id}">Agregar</button> 
-    </div>
-    `;
-
-    cardContainer.appendChild(productoCard);
-  });
+  productos.forEach((producto) => {});
 };
 
 renderProductos(mocks.productos);
