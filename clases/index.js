@@ -40,54 +40,119 @@ const mocks = {
     {
       id: "MartesLocos",
       tipoDescuento: 2,
-      valor: 350,
+      valor: 3500,
     },
   ],
 };
 
-function popularCarrito() {}
-
-function obtenerCupon() {
-  return mocks.cupones[Math.floor(Math.random() * 2)];
-}
-
 class Producto {
-    /**
-     * id
-     * nombre
-     * precio
-     * stock
-     */
+  constructor({ id, nombre, precio, stock }) {
+    this.id = id;
+    this.nombre = nombre;
+    this.precio = precio;
+    this.stock = stock;
+  }
 }
 
 class Cupones {
-    /**
-     * id
-     * tipoDescuento => 1 descuento porcentual / 2 descuento fijo
-     * valor
-     */
+  constructor({ id, tipoDescuento, valor }) {
+    this.id = id;
+    this.tipoDescuento = tipoDescuento;
+    this.valor = valor;
+  }
 }
 
 class Carrito {
-    /**
-     * items
-     * total
-     * cupon
-     */
+  constructor() {
+    this.items = [];
+    this.total = 0;
+    this.cupon = null;
+  }
+
+  agregarProducto(producto, cantidad) {
+    const { stock, ...rest } = producto;
+    if (stock < cantidad) {
+      console.log(
+        `Producto ${producto.nombre} - La cantidad solicitada execede al stock disponible.`
+      );
+
+      return;
+    }
+    const productoNuevo = {
+      ...rest,
+      cantidad,
+    };
+
+    this.total += productoNuevo.precio * cantidad;
+
+    this.items.push(productoNuevo);
+  }
+
+  removerProducto(id) {
+    const itemIndex = this.items.findIndex((producto) => producto.id === id);
+    if (itemIndex < 0) {
+      console.log(`Item con ID: ${id} no existe en el carrito`);
+      return;
+    }
+
+    const itemToRemove = this.items[itemIndex];
+    this.items.splice(itemIndex, 1);
+    this.total -= itemToRemove.precio * itemToRemove.cantidad;
+    console.log(
+      `Item ${itemToRemove.nombre}(${itemToRemove.cantidad}) fue removido.`
+    );
+  }
+
+  aplicarCupon(cupon) {
+    if (!cupon) {
+      console.log("Cupon invalido");
+
+      return;
+    }
+
+    // tipoDescuento = 1 significa que es un descuento %
+    if (cupon.tipoDescuento === 1) {
+      const porcentaje = cupon.valor / 100;
+
+      this.total *= porcentaje;
+
+      console.log(
+        `Se aplico el cupon con ID: ${cupon.id} con un descuento de ${cupon.valor}%`
+      );
+
+      return;
+    }
+
+    if (cupon.tipoDescuento === 2) {
+      this.total -= cupon.valor;
+
+      console.log(
+        `Se aplico el cupon con ID: ${cupon.id} con un descuento de ${cupon.valor} pesos`
+      );
+
+      return;
+    }
+  }
 }
 
-/**
- * Ejercicio de clases
- * Se debera crear una simuacion de un carrito de compras de un ecomerce.
- * Hay que agregar los atributos y metodos de las Productos, Cupones y Carrito.
- * 
- * El carrito se debera poder acceder a la lista de productos en el carrito
- * y a su valor total, que es la suma del precio de todos los productos.
- * Tambien si es que hay se debera mostrar algun cupon aplicado a la compra.
- * Los metodos del carrito deberan ser los siguientes:
- * - agregar un producto
- * - remover un producto
- * - ver el total
- * - ver la lista de productos
- * - realizar la compra
- */
+const cardContainer = document.querySelector("#card-container");
+
+const renderProductos = (productos) => {
+  productos.forEach((producto) => {
+    const productoCard = document.createElement("div");
+    productoCard.className = "card";
+    productoCard.innerHTML = `
+     <div class="card-header">
+        <h2>${producto.nombre}</h2>
+        <p>Precio: $${producto.precio}</p>
+    </div>
+    <div class="card-actions">
+        <button data-id=${producto.id}">Agregar</button> 
+    </div>
+    `;
+
+    cardContainer.appendChild(productoCard);
+  });
+};
+
+renderProductos(mocks.productos);

@@ -1,0 +1,40 @@
+* {
+  box-sizing: border-box;
+}
+:root {
+  background-color: #393e46;
+  color: #dfd0b8;
+  padding: 0.5rem;
+}
+
+.card {
+  border: 2px solid #dfd0b8;
+  width: 250px;
+  height: fit-content;
+  padding: 0.5rem;
+}
+
+.card-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-actions button {
+    cursor: pointer;
+}
+
+.carrito-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}

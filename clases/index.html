@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./index.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Carrito</title>
+  </head>
+  <body>
+    <div class="flex col justify-between h-screen">
+      <section class="w-3/4">
+        <div class="mb-4">
+          <h1 class="text-2xl">Lista de productos</h1>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-4" id="card-container"></div>
+        </div>
+      </section>
+      <main class="w-1/4 border-l p-2">
+        <div class="mb-4">
+          <h2 class="text-xl">Carrito de compras</h2>
+        </div>
+        <form id="cupon-form" class="mb-4">
+          <input
+            type="text"
+            id="cupon-input"
+            placeholder="Ingrese el cupon"
+            class="w-full p-2 border border-gray-300 rounded mb-2"
+          />
+          <button
+            type="submit"
+            id="aplicar-cupon"
+            class="w-full bg-[#dfd0b8] text-gray-700 p-2 rounded hover:bg-[#c0b19a] transition-colors duration-300"
+          >
+            Aplicar cupón
+          </button>
+        </form>
+        <div class="carrito-body" id="carrito-body">
+          <div class="carrito-item">
+            <p>nombre</p>
+            <p>precio</p>
+          </div>
+        </div>
+        <div class="mt-4">
+          <p>Total: $0</p>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script src="./index.js"></script>
+</html>
