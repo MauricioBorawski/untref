@@ -134,11 +134,26 @@ class Carrito {
     }
   }
 }
+const cardContainer = document.getElementById("card-container");
 
-const cardContainer = document.querySelector("#card-container");
+const mostrarProductos = (productos) => {
+  for (let i = 0; i < productos.length; i++) {
+    const producto = productos[i];
+    const card = document.createElement("div");
 
-const renderProductos = (productos) => {
-  productos.forEach((producto) => {});
+    card.classList.add("card");
+
+    cardContainer.append(card);
+  }
 };
 
-renderProductos(mocks.productos);
+function ocultarCarrito() {
+  const carritoContainer = document.querySelector("#carrito-container");
+  const btnOcultar = document.querySelector("#btn-ocultar");
+
+  carritoContainer.classList.toggle("hidden");
+
+  btnOcultar.textContent = carritoContainer.classList.contains("hidden") ? "Mostrar" : "Ocultar";
+}
+
+mostrarProductos(mocks.productos);
