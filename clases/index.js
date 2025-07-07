@@ -140,8 +140,25 @@ const mostrarProductos = (productos) => {
   for (let i = 0; i < productos.length; i++) {
     const producto = productos[i];
     const card = document.createElement("div");
+    const cardHeader = document.createElement("div");
+    const cardActions = document.createElement("div");
+
+    const actionBtn = document.createElement("button");
+    actionBtn.textContent = "Agregar";
+    cardActions.append(actionBtn);
 
     card.classList.add("card");
+    cardHeader.classList.add("card-header");
+    cardActions.classList.add("card-actions");
+
+    const cardTitle = document.createElement("h2");
+    cardTitle.textContent = producto.nombre;
+    const cardPrice = document.createElement("p");
+    cardPrice.textContent = producto.precio;
+
+    cardHeader.append(...[cardTitle, cardPrice]);
+
+    card.append(...[cardHeader, cardActions]);
 
     cardContainer.append(card);
   }
@@ -153,7 +170,9 @@ function ocultarCarrito() {
 
   carritoContainer.classList.toggle("hidden");
 
-  btnOcultar.textContent = carritoContainer.classList.contains("hidden") ? "Mostrar" : "Ocultar";
+  btnOcultar.textContent = carritoContainer.classList.contains("hidden")
+    ? "Mostrar"
+    : "Ocultar";
 }
 
 mostrarProductos(mocks.productos);
