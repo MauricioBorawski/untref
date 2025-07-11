@@ -28,13 +28,18 @@
 }
 
 .card-actions button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .carrito-item {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.carrito-descuento {
+  color: #bda9a4;
+  font-size: 12px;
 }

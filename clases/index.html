@@ -14,21 +14,11 @@
           <h1 class="text-2xl">Lista de productos</h1>
         </div>
         <div>
-          <div class="flex flex-wrap gap-4" id="card-container">
-            <div class="card">
-              <div class="card-header">
-                <h2>Ejemplo</h2>
-                <p>$2500</p>
-              </div>
-              <div class="card-actions">
-                <button>Agregar</button>
-              </div>
-            </div>
-          </div>
+          <div class="flex flex-wrap gap-4" id="card-container"></div>
         </div>
       </section>
       <main class="w-1/4 border-l p-2">
-        <button id="btn-ocultar" onclick="{ocultarCarrito()}">Mostrar</button>
+        <button id="btn-ocultar">Mostrar</button>
         <div id="carrito-container" class="hidden">
           <div class="mb-4">
             <h2 class="text-xl">Carrito de compras</h2>
@@ -50,7 +40,10 @@
           </form>
           <div class="carrito-body" id="carrito-body"></div>
           <div class="mt-4">
-            <p>Total: $0</p>
+            <p id="carrito-descuento" class="carrito-descuento hidden">
+              Descuento aplicado: $3500
+            </p>
+            <p id="carrito-total"></p>
           </div>
         </div>
       </main>
