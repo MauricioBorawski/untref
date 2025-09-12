@@ -1,0 +1,15 @@
+{
+  "version": "1",
+  "name": "UNTREF-BRUNO",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ],
+  "presets": {
+    "requestType": "http",
+    "requestUrl": "https://ecomerce-api-gte8.onrender.com"
+  },
+  "size": 0.0009908676147460938,
+  "filesCount": 4
+}

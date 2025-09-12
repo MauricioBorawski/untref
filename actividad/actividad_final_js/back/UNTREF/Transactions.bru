@@ -1,0 +1,30 @@
+meta {
+  name: Transactions
+  type: http
+  seq: 4
+}
+
+post {
+  url: https://ecomerce-api-gte8.onrender.com/api/transactions/create
+  body: json
+  auth: inherit
+}
+
+headers {
+  authorization: b9ef7344-8575-45a7-b7a2-77c155db14ee
+}
+
+body:json {
+  {
+    "products": [
+      {
+        "productId": 1,
+        "quantity": 1
+      }
+    ]
+  }
+}
+
+settings {
+  encodeUrl: true
+}

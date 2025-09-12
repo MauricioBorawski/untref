@@ -1,0 +1,22 @@
+meta {
+  name: register
+  type: http
+  seq: 2
+}
+
+post {
+  url: https://ecomerce-api-gte8.onrender.com/api/auth/register
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "username": "Mauri",
+    "password": "mauri123"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
