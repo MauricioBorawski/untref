@@ -1,5 +1,6 @@
 
 import express from "express";
+import cors from "cors";
 import path from "path";
 import usersRouter from "./Routes/Auth.route";
 import productosRouter from "./Routes/Productos.route";
@@ -7,6 +8,8 @@ import transactionsRouter from "./Routes/Transactions.route";
 
 const app = express();
 const PORT = 3000;
+
+app.use(cors());
 
 app.use(express.json());
 
