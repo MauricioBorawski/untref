@@ -1,0 +1,1 @@
+export const BASE_URL = "https://ecomerce-api-gte8.onrender.com/api"

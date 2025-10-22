@@ -1,37 +1,47 @@
-import {useState} from "react";
-import {Button} from "./components/button.component";
-import { Input } from "@/components/ui/input";
+import {useState, useEffect} from "react";
+import {Loading} from "@/components/Loading";
+import {ProductCard} from "@/components/ProductCard";
+import {api, productsImages} from "@/lib/utils";
+
+import type {Producto, ProductoWithImage} from "./types";
 
 function App() {
-    return <div>
-        <h1>Hello Vite + React! UNTREF</h1>
-        <Input />
-        <Contador />
-    </div>
-}
+    const [isLoading, setIsLoading] = useState(true);
+    const [productos, setProductos] = useState<ProductoWithImage[]>([]);
 
-function Contador() {
-   const [contador, setContador] = useState(0);
+    useEffect(() => {
+        async function fetchApi() {
+            const response = await api('/productos', {method: 'GET'}) as {data: Producto[]};
 
-   const handleSuma = () => {
-       setContador(prevState => prevState + 1);
-   }
-   const handleReset = () => {
-       setContador(0);
-   }
-   const handleResta = () => {
-       setContador(prevState => {
-           if (prevState === 0) return prevState;
+            if (response) {
+                const productWithImage: ProductoWithImage[] = response.data.map((product, index) => ({
+                    ...product,
+                    image: productsImages[index].image,
+                }));
 
-           return prevState - 1;
-       });
-   }
+                setIsLoading(false);
+                setProductos(productWithImage);
+            }
+        }
+
+        fetchApi();
+    }, []);
+
+    if (isLoading) return <Loading/>;
+
     return (
         <div>
-            <h2>Contador: {contador}</h2>
-            <Button contenido={"Sumar"} handleClick={handleSuma} />
-            <Button contenido={"Resetear"} handleClick={handleReset} />
-            <Button contenido={"Restar"} handleClick={handleResta} />
+            <h1>UNTREF Ecomerce</h1>
+
+            <section>
+                <div className="max-w-[1280px] p-4 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {
+                        productos.map((producto) => (
+                            <ProductCard producto={producto} />
+                        ))
+                    }
+                </div>
+            </section>
         </div>
     )
 }
