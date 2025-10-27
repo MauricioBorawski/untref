@@ -1,5 +1,6 @@
-import {Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, CardAction} from "@ui/card";
+import {Card, CardHeader, CardTitle, CardContent, CardFooter, CardAction} from "@ui/card";
 import {Button} from "@ui/button";
+import {ProductDialog} from "@/components/ProductDialog";
 import {ProductoWithImage} from "@/types";
 
 type ProductCardProps = {
@@ -10,19 +11,17 @@ export function ProductCard({producto}: ProductCardProps) {
     return (
         <Card>
             <CardHeader className="flex justify-between items-center">
-                <div>
-                    <CardTitle>{producto.name}</CardTitle>
-                    <CardDescription>{producto.description}</CardDescription>
-                </div>
-                <p><strong>Precio:</strong> {producto.price}</p>
+                <CardTitle>{producto.name}</CardTitle>
             </CardHeader>
             <CardContent>
-                <img src={producto.image} alt="Producto image" />
+                <img src={producto.image} alt="Producto image"/>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-                <p><strong>Stock:</strong> {producto.stock}</p>
+                <p><strong>Precio:</strong> ${producto.price}</p>
                 <CardAction>
-                    <Button className="cursor-pointer">Comprar</Button>
+                    <ProductDialog product={producto}>
+                        <Button className="cursor-pointer">Ver mas</Button>
+                    </ProductDialog>
                 </CardAction>
             </CardFooter>
         </Card>
