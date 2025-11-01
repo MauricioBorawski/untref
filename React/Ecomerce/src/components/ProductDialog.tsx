@@ -1,8 +1,8 @@
-import {ReactNode} from "react";
+import {type ReactNode} from "react";
+import {useCarrito} from "@/contexts/Carrito";
 import {
     Dialog,
     DialogTrigger,
-    DialogClose,
     DialogContent,
     DialogHeader,
     DialogTitle,
@@ -17,7 +17,13 @@ type ProductDialogProps = {
 }
 
 export function ProductDialog(props: ProductDialogProps) {
+    const {addProducto} = useCarrito();
+
     const {product} = props;
+
+    const handleBuyProduct = (producto: ProductoWithImage) => {
+        addProducto(producto);
+    };
 
     return (
         <Dialog>
@@ -32,11 +38,11 @@ export function ProductDialog(props: ProductDialogProps) {
                     </DialogDescription>
                 </DialogHeader>
                 <div>
-                    <img src={product.image} alt={`Imagen del producto ${product.name}`} />
+                    <img src={product.image} alt={`Imagen del producto ${product.name}`} className="w-[460px] h-[300px]"/>
                     <p><strong>Precio:</strong> ${product.price}</p>
                 </div>
                 <DialogFooter>
-                    <Button>Comprar</Button>
+                    <Button onClick={() => handleBuyProduct(product)}>Comprar</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

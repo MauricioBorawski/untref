@@ -14,7 +14,7 @@ export function ProductCard({producto}: ProductCardProps) {
                 <CardTitle>{producto.name}</CardTitle>
             </CardHeader>
             <CardContent>
-                <img src={producto.image} alt="Producto image"/>
+                <img src={producto.image} alt="Producto image" className="h-[156px] w-full"/>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
                 <p><strong>Precio:</strong> ${producto.price}</p>
