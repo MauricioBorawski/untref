@@ -1,27 +1,13 @@
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuList,
-    NavigationMenuTrigger
-} from "@ui/navigation-menu";
-import {CarritoList} from "@/components/CarritoList";
+import {CartDropdown} from "@/components/CarritoList";
 
 export function NavBar() {
 
     return (
-        <div className='flex flex-row items-center gap-2 p-4'>
-            <h1 className="font-semibold text-2xl">UNTREF Ecomerce</h1>
-            <NavigationMenu>
-                <NavigationMenuList>
-                    <NavigationMenuItem>
-                        <NavigationMenuTrigger>Carrito</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                            <CarritoList/>
-                        </NavigationMenuContent>
-                    </NavigationMenuItem>
-                </NavigationMenuList>
-            </NavigationMenu>
-        </div>
+        <header className="flex justify-between items-center px-4 py-2 border-b">
+            <h1 className="text-lg font-semibold">Tienda</h1>
+            <div className="flex items-center gap-2">
+                <CartDropdown />
+            </div>
+        </header>
     )
 }

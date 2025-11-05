@@ -1,74 +1,122 @@
+import {forwardRef} from "react";
 import {useCarrito} from "@/contexts/Carrito";
-import {Item, ItemGroup, ItemTitle, ItemContent, ItemDescription, ItemFooter, ItemActions} from "@ui/item";
-import {Button} from "@ui/button";
-import {Tooltip, TooltipContent, TooltipTrigger} from "@ui/tooltip";
-import {ArrowDown01, ArrowUp01} from "lucide-react";
-import {ProductoWithImage} from "@/types";
+import {
+    DropdownMenu,
+    DropdownMenuTrigger,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu"
+import {Button} from "@/components/ui/button"
+import type {ProductoWithImage} from "@/types";
+import {ShoppingCart, Trash2, ArrowUp, ArrowDown} from "lucide-react"
 
-export function CarritoList() {
+export function CartDropdown() {
     const {carrito, removeProducto, sortProductos} = useCarrito();
 
-    if (carrito.length === 0) return <CarritoEmpty/>;
+
+    const total = carrito.reduce((acc, product) => acc + product.price, 0);
 
     return (
-        <div>
-            <div className="flex flex-row items-center gap-2">
-                <Tooltip>
-                    <TooltipTrigger>
-                        <Button size='icon' onClick={() => sortProductos('Desc')}>
-                            <ArrowDown01/>
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        Menor Precio
-                    </TooltipContent>
-                </Tooltip>
-                <Tooltip>
-                    <TooltipTrigger>
-                        <Button size='icon' onClick={() => sortProductos('Asc')}>
-                            <ArrowUp01/>
-                        </Button>
-                    </TooltipTrigger>
-                    <TooltipContent>
-                        Mayor Precio
-                    </TooltipContent>
-                </Tooltip>
-            </div>
-            <ItemGroup>
-                {carrito.map((producto) => (
-                    <CarritoItem producto={producto} removeProducto={removeProducto}/>
-                ))}
-            </ItemGroup>
+        <DropdownMenu>
+            <DropdownMenuTrigger>
+                <CarritoRenderButton carrito={carrito}/>
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent className="w-56 p-2">
+                <DropdownMenuLabel>Tu carrito</DropdownMenuLabel>
+                <CarritoSortButtons sortProductos={sortProductos}/>
+                <DropdownMenuSeparator/>
+                <CarritoBody carrito={carrito} removeProducto={removeProducto}/>
+                <DropdownMenuSeparator/>
+                <div className="flex justify-between px-2 py-1 text-sm font-medium">
+                    <span>Total:</span>
+                    <span>${total}</span>
+                </div>
+                <Button className="w-full mt-2">Ir al checkout</Button>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
+const CarritoRenderButton = forwardRef<
+    HTMLButtonElement,
+    { carrito: ProductoWithImage[] }
+>(({carrito}, ref) => {
+    return (
+        <Button ref={ref} variant="ghost" size="icon" className="relative">
+            <ShoppingCart className="h-5 w-5"/>
+            {carrito.length > 0 && (
+                <span
+                    className="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+          {carrito.length}
+        </span>
+            )}
+        </Button>
+    )
+})
+
+export function CarritoSortButtons({sortProductos}: { sortProductos: (type: 'Asc' | 'Desc') => void }) {
+    return (
+        <div className="flex flex-col justify-between items-center gap-2 px-2 pb-2">
+            <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1 w-full"
+                onClick={() => {
+                    sortProductos('Desc')
+                }}
+            >
+                <ArrowUp className="h-4 w-4"/>
+                <span>Menor precio</span>
+            </Button>
+
+            <Button
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1 w-full"
+                onClick={() => {
+                    sortProductos('Asc')
+                }}
+            >
+                <ArrowDown className="h-4 w-4"/>
+                <span>Mayor precio</span>
+            </Button>
         </div>
-    );
+    )
 }
 
-function CarritoEmpty() {
+function EmptyCarrito() {
     return (
-        <Item>
-            <ItemContent>
-                <ItemTitle>No hay productos en el carrito</ItemTitle>
-                <ItemDescription>Agregue productos al carrito</ItemDescription>
-            </ItemContent>
-        </Item>
-    );
+        <DropdownMenuItem disabled>El carrito está vacío</DropdownMenuItem>
+    )
 }
 
-function CarritoItem({producto, removeProducto}: {
-    producto: ProductoWithImage,
-    removeProducto: (producto: ProductoWithImage) => void
+function CarritoBody({carrito, removeProducto}: {
+    carrito: ProductoWithImage[],
+    removeProducto: (product: ProductoWithImage) => void
 }) {
-    return (<Item>
-        <ItemContent>
-            <ItemTitle>{producto.name}</ItemTitle>
-            <ItemDescription>${producto.price}</ItemDescription>
-            <ItemFooter>
-                <ItemActions>
-                    <Button onClick={() => removeProducto(producto)}>
-                        Remover
+    if (carrito.length === 0) return <EmptyCarrito/>
+
+    return (
+        carrito.map(item => (
+            <DropdownMenuItem
+                key={item.id}
+                className="flex justify-between carrito-center gap-2"
+            >
+                <span>{item.name}</span>
+                <div className="flex carrito-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    ${item.price}
+                  </span>
+                    <Button size='icon' onClick={() => removeProducto(item)}>
+                        <Trash2
+                            className="h-4 w-4 hover:text-destructive cursor-pointer"
+                        />
                     </Button>
-                </ItemActions>
-            </ItemFooter>
-        </ItemContent>
-    </Item>)
+                </div>
+            </DropdownMenuItem>
+        ))
+    );
 }
