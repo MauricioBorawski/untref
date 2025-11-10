@@ -1,4 +1,5 @@
 import {forwardRef} from "react";
+import {Link} from "react-router";
 import {useCarrito} from "@/contexts/Carrito";
 import {
     DropdownMenu,
@@ -34,7 +35,9 @@ export function CartDropdown() {
                     <span>Total:</span>
                     <span>${total}</span>
                 </div>
-                <Button className="w-full mt-2">Ir al checkout</Button>
+                <Button className="w-full mt-2" disabled={!carrito || carrito.length === 0}>
+                    <Link to={'checkout'}>Ir al checkout</Link>
+                </Button>
             </DropdownMenuContent>
         </DropdownMenu>
     )

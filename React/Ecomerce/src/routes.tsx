@@ -29,6 +29,16 @@ export const routes = createBrowserRouter([
         ]
     },
     {
+        path: '/checkout',
+        Component: PageLayout,
+        children: [
+            {
+                index: true,
+                element: <p>Checkout</p>
+            }
+        ]
+    },
+    {
         path: '*',
         Component: PageLayout,
         children: [
