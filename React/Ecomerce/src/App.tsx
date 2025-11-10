@@ -1,13 +1,9 @@
-import Home from "./Pages/Home";
-import {NavBar} from "@/components/NavBar";
-import {CarritoContextProvider} from "@/contexts/Carrito";
+import {RouterProvider} from "react-router";
+import {routes} from "@/routes";
 
 function App() {
     return (
-        <CarritoContextProvider>
-            <NavBar/>
-            <Home/>
-        </CarritoContextProvider>
+        <RouterProvider router={routes}/>
     )
 }
 
